@@ -1,0 +1,26 @@
+<apex:page lightningStylesheets="true" controller="wooble">
+    <style>
+        body{
+        	margin:10px;
+        }
+        p{
+        	font-size:20px;
+        	font-weight:bold;
+        }
+    </style>
+	<apex:image url="https://www.forsysinc.com/assets/img/logo.png" height="200" width="300"/>
+    
+    <apex:form >
+        <apex:pageBlock >
+            <apex:pageBlockSection >
+                <p>
+                    Enter Your Name
+                </p>
+                <apex:inputText value="{!lastName}"/>
+            </apex:pageBlockSection>
+            <div align="center" draggable="false" >
+                <apex:commandButton action="{!movetoemail}" value="Next" style="border-radius:10px;background-color:royalblue;color:white;border:0;outline:0"/>
+			</div>
+        </apex:pageBlock>
+    </apex:form>
+</apex:page>
