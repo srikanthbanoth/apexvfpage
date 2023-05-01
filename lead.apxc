@@ -1,0 +1,62 @@
+public class wooble {
+    public String lastName{get;set;}
+    public String Email{get;set;}
+    public String Profession{get;set;}
+    public String IpAddress{get;set;}
+    
+    public wooble(){
+        IpAddress = ApexPages.currentPage().getHeaders().get('X-Salesforce-SIP');
+    }
+    public PageReference movetoemail(){
+        Lead newLead=new Lead();
+        newLead.LastName=lastName;
+        newLead.LeadSource='web';
+        newLead.Company='TestCompany';
+        newLead.IP_Address__c=IpAddress;
+        newLead.Category__c='Level-I';
+        try{
+            insert newLead;
+            PageReference pg=new PageReference('/apex/email'+'?rId='+newLead.Id);
+        	pg.setRedirect(true);
+        	return pg;
+        }
+        catch(DmlException e){
+            return null;
+        }
+        
+    }
+     public PageReference movetoprofession(){
+         String rId=ApexPages.currentPage().getParameters().get('rId');
+         Lead a=new Lead();
+         a.Id=rId;
+         a.Email=Email;
+         a.Category__c='Level-II';
+         try{
+             update a;
+             PageReference pg=new PageReference('/apex/profession'+'?rId='+a.Id);
+         	 pg.setRedirect(true);
+        	 return pg;
+         }
+         catch(DmlException e){
+             return null;
+         }
+         
+    }
+     public PageReference laststep(){
+         String rId=ApexPages.currentPage().getParameters().get('rId');
+         Lead a=new Lead();
+         a.Id=rId;
+         a.Category__c='Level-III';
+         a.Profession__c=Profession;
+         try{
+             update a;
+             PageReference pg=new PageReference('https://www.forsysinc.com');
+         	 pg.setRedirect(true);
+        	 return pg;
+         }
+         catch(DmlException e){
+             return null;
+         }
+         
+    }
+}
